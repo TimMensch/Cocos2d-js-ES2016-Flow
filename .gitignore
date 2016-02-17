@@ -1,0 +1,14 @@
+*.vpwhist
+*.vtg
+*.pdb
+*.ilk
+*.exe
+node_modules
+node_modules/*
+Thumbs.db
+maindist
+int
+cache
+bower_components
+slave_*.log
+frameworks/

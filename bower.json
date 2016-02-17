@@ -1,0 +1,24 @@
+{
+  "name": "steel_dragons",
+  "version": "0.0.1",
+  "authors": [
+    "Tim Mensch <tim-git-tecra@bitgems.com>"
+  ],
+  "private": true,
+  "license": "LicenseRef-LICENSE",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ondomready": "~1.4.0",
+    "EaselJS": "easeljs#0.8.2",
+    "TweenJS": "createjs-tweenjs#0.6.2",
+    "PreloadJS": "createjs-preloadjs#0.6.2",
+    "SoundJS": "createjs-soundjs#0.6.2",
+    "socket.io-client": "~1.4.5"
+  }
+}

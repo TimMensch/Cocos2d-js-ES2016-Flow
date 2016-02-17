@@ -1,0 +1,37 @@
+{
+    "rules": {
+        "brace-style" : 2,
+        "comma-dangle":0,
+        "comma-style":2,
+        "guard-for-in" : 2,
+        "indent": [ 2, 4, {"SwitchCase": 1} ],
+        "linebreak-style": [ 2, "unix" ],
+        "max-len": [1, 120, 4],
+        "no-console":0,
+        "eqeqeq": [2, "smart"],
+        "no-implicit-coercion": 2,
+        "no-invalid-this":2,
+        "no-new-wrappers":2,
+        "no-shadow": [ 2, {
+                "builtinGlobals":true,
+                "hoist":"all",
+                "allow":["done","data"]
+        }],
+        "no-unused-expressions": [2, { "allowTernary": true }],
+        "no-unused-vars": [2, { "vars":"all", "args":"none" }],
+        "no-with":2,
+        "radix":2,
+        "semi":[2, "always"],
+        "yoda":[2, "never", { "exceptRange": true }]
+    },
+    "env": {
+        "es6": true,
+        "commonjs": true,
+        "browser": true
+    },
+    "parser":"babel-eslint",
+    "plugins": [
+        "flow-vars"
+    ],
+    "extends": "eslint:recommended"
+}
