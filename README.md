@@ -17,11 +17,28 @@ my development environment:
    * WebPack to build a combined, obfuscated module when I am ready to release
      my game
 
+Supported Platforms
+-------------------
+
+Primarily tested on Windows under a Bash environment, but should 
+work on Mac or Linux. Please let me know if any changes are needed
+to support those platforms. I tried to make everything cross-platform,
+but sometimes things can fall through the cracks.
 
 Set up requirements
 -------------------
 
-Download the [Git LFS](https://git-lfs.github.com/) client and run (if you
+This template doesn't include the Cocos2d install itself. You'll need to download
+and install Cocos2d-x from [here](http://cocos2d-x.org/download). Once it's installed,
+you should run:
+
+cocos new -d my_new_project -l js
+
+This will create a my_new_project project folder that contains MyJSGame/frameworks. Move
+the frameworks folder into the cocos2d_js_gulp_flow top level folder and delete the my_new_project
+folder.
+
+Then download the [Git LFS](https://git-lfs.github.com/) client and run (if you
 haven't already):
 
 ```
@@ -73,7 +90,11 @@ causing the problem, but it seems there are XSS protections that prevent the
 code from working with the WebPack dev server.
 
 Finally, you can either run `flow check` or `gulp flow` to check your code
-with FlowType static type analysis.
+with FlowType static type analysis. If you're on Windows, for `gulp flow` to
+work you need to set the environment variable FLOW_BIN to point to the path to 
+the Windows flow binary, as described on the 
+[gulp-flowtype](https://www.npmjs.com/package/gulp-flowtype) page. `flow check`
+should work if you have the flow binary in your path.
 
 About the Flow Declarations
 ----------------------------
