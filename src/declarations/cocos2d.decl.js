@@ -8,7 +8,6 @@ declare class Widget  {
 }
 declare class cc  {
 	static ActionInterval :typeof ActionInterval ;
-	static loader :typeof loader ;
 	static ORIENTATION_PORTRAIT :number;
 	static ORIENTATION_PORTRAIT_UPSIDE_DOWN :number;
 	static ORIENTATION_LANDSCAPE_LEFT :number;
@@ -26,6 +25,8 @@ declare class cc  {
 	static AsyncPool :typeof AsyncPool ;
 	static async :typeof async ;
 	static path :typeof path ;
+	static Loader :typeof Loader ;
+	static loader :Loader;
 	static formatStr(): string ;
 	static sys :typeof sys ;
 	static game :typeof game ;
@@ -796,21 +797,6 @@ declare class ActionInterval  {
 	repeatForever(): ActionInterval ;
 	static create(...p:any): any ;
 }
-declare class loader  {
-	getXMLHttpRequest(): XMLHttpRequest ;
-	loadJs(baseDir?:string,jsList:Array<any>,cb?:function): any ;
-	loadJsWithImg(baseDir?:string,jsList:Array<any>,cb?:function): any ;
-	loadTxt(url:string,cb?:function): any ;
-	loadJson(url:string,cb?:function): any ;
-	loadImg(url:string,option?:any,callback:function): Image ;
-	getUrl(basePath:string,url?:string): any ;
-	load(resources:string,option?:function,loadCallback?:any): AsyncPool ;
-	loadAliases(url:string,callback?:function): any ;
-	register(extNames:string,loader:function): any ;
-	getRes(url:any): any ;
-	release(url:any): any ;
-	releaseAll(): any ;
-}
 declare class AsyncPool  {
 	constructor(srcObj:any,limit:number,iterator:function,onEnd:function,target:any): any ;
 }
@@ -829,6 +815,24 @@ declare class path  {
 	static dirname(pathStr:string): any ;
 	static changeExtname(pathStr:string,extname?:string): string ;
 	static changeBasename(pathStr:string,basename:string,isSameExt?:boolean): string ;
+}
+declare class Loader  {
+	resPath :string;
+	audioPath :string;
+	cache :any;
+	getXMLHttpRequest(): XMLHttpRequest ;
+	loadJs(baseDir?:string,jsList:Array<any>,cb?:function): any ;
+	loadJsWithImg(baseDir?:string,jsList:Array<any>,cb?:function): any ;
+	loadTxt(url:string,cb?:function): any ;
+	loadJson(url:string,cb?:function): any ;
+	loadImg(url:string,option?:any,callback:function): Image ;
+	getUrl(basePath:string,url?:string): any ;
+	load(resources:string,option?:function,loadCallback?:any): AsyncPool ;
+	loadAliases(url:string,callback?:function): any ;
+	register(extNames:string,loader:function): any ;
+	getRes(url:any): any ;
+	release(url:any): any ;
+	releaseAll(): any ;
 }
 declare class sys  {
 	static LANGUAGE_ENGLISH :number;
@@ -893,13 +897,35 @@ declare class sys  {
 	static openURL(url:string): any ;
 }
 declare class game  {
+	static DEBUG_MODE_NONE :number;
+	static DEBUG_MODE_INFO :number;
+	static DEBUG_MODE_WARN :number;
+	static DEBUG_MODE_ERROR :number;
+	static DEBUG_MODE_INFO_FOR_WEB_PAGE :number;
+	static DEBUG_MODE_WARN_FOR_WEB_PAGE :number;
+	static DEBUG_MODE_ERROR_FOR_WEB_PAGE :number;
+	static EVENT_HIDE :string;
+	static EVENT_SHOW :string;
+	static EVENT_RESIZE :string;
+	static EVENT_RENDERER_INITED :string;
+	static RENDER_TYPE_CANVAS :number;
+	static RENDER_TYPE_WEBGL :number;
+	static RENDER_TYPE_OPENGL :number;
 	static CONFIG_KEY :any;
 	static frame :any;
 	static container :any;
 	static canvas :any;
 	static config :any;
-	static onStart :function;
-	static onStop :function;
+{ name: 'onStart',
+  longname: 'cc.game.onStart',
+  scope: 'static',
+  parent: null,
+  children: {},
+  kind: 'member',
+  type: 'function|null' }
+	static onStart :function|null;
+	static onStop :function|null;
+	static onResize :function|null;
 	static setFrameRate(frameRate:any): any ;
 	static step(): any ;
 	static pause(): any ;
@@ -907,7 +933,7 @@ declare class game  {
 	static isPaused(): any ;
 	static restart(): any ;
 	static prepare(cb:any): any ;
-	static run(config?:any,onStart?:function): any ;
+	static run(config?:any,onStart?:function|null): any ;
 }
 declare class view  {
 	constructor(): any ;
@@ -957,20 +983,20 @@ declare class Class  {
 }
 declare class Point  {
 	constructor(x:number,y:number): any ;
-	 x :number;
-	 y :number;
+	x :number;
+	y :number;
 }
 declare class Size  {
 	constructor(width:number,height:number): any ;
-	 width :number;
-	 height :number;
+	width :number;
+	height :number;
 }
 declare class Rect  {
 	constructor(x:number,y:number,width:number,height:number): any ;
-	 x :number;
-	 y :number;
-	 width :number;
-	 height :number;
+	x :number;
+	y :number;
+	width :number;
+	height :number;
 }
 declare class saxParser  {
 	constructor(): any ;
@@ -991,24 +1017,24 @@ declare class $  {
 declare class Color  {
 	constructor(r:number,g:number,b:number,a:number,arrayBuffer:Array<any>,offset:number): Color ;
 	static BYTES_PER_ELEMENT :number;
-	 r :any;
-	 g :any;
-	 b :any;
-	 a :any;
-	 x :any;
-	 y :any;
-	 z :any;
-	 u :any;
-	 v :any;
-	 tl :any;
-	 tr :any;
-	 bl :any;
-	 br :any;
-	 vertices :any;
-	 colors :any;
-	 texCoords :any;
-	 arrayBuffer :any;
-	 c :any;
+	r :any;
+	g :any;
+	b :any;
+	a :any;
+	x :any;
+	y :any;
+	z :any;
+	u :any;
+	v :any;
+	tl :any;
+	tr :any;
+	bl :any;
+	br :any;
+	vertices :any;
+	colors :any;
+	texCoords :any;
+	arrayBuffer :any;
+	c :any;
 }
 declare class Acceleration  {
 	constructor(x:number,y:number,z:number,timestamp:number): any ;
@@ -1070,17 +1096,17 @@ declare class screen  {
 	static autoFullScreen(element:Element,onFullScreenChange:function): any ;
 }
 declare class visibleRect  {
-	 topLeft :Point;
-	 topRight :Point;
-	 top :Point;
-	 bottomLeft :Point;
-	 bottomRight :Point;
-	 bottom :Point;
-	 center :Point;
-	 left :Point;
-	 right :Point;
-	 width :number;
-	 height :number;
+	topLeft :Point;
+	topRight :Point;
+	top :Point;
+	bottomLeft :Point;
+	bottomRight :Point;
+	bottom :Point;
+	center :Point;
+	left :Point;
+	right :Point;
+	width :number;
+	height :number;
 	static init(...p:any): any ;
 }
 declare class inputManager  {
@@ -1233,42 +1259,42 @@ declare class eventManager  {
 	static dispatchCustomEvent(eventName:string,optionalUserData:any): any ;
 }
 declare class Node  {
-	 x :number;
-	 y :number;
-	 width :number;
-	 height :number;
-	 anchorX :number;
-	 anchorY :number;
-	 ignoreAnchor :boolean;
-	 skewX :number;
-	 skewY :number;
-	 zIndex :number;
-	 vertexZ :number;
-	 rotation :number;
-	 rotationX :number;
-	 rotationY :number;
-	 scale :number;
-	 scaleX :number;
-	 scaleY :number;
-	 visible :boolean;
-	 color :Color;
-	 cascadeColor :boolean;
-	 opacity :number;
-	 opacityModifyRGB :boolean;
-	 cascadeOpacity :boolean;
-	 children :Array<any>;
-	 childrenCount :number;
-	 parent :Node;
-	 running :boolean;
-	 tag :number;
-	 userData :any;
-	 userObject :any;
-	 arrivalOrder :number;
-	 actionManager :ActionManager;
-	 scheduler :Scheduler;
-	 grid :GridBase;
-	 shaderProgram :GLProgram;
-	 glServerState :number;
+	x :number;
+	y :number;
+	width :number;
+	height :number;
+	anchorX :number;
+	anchorY :number;
+	ignoreAnchor :boolean;
+	skewX :number;
+	skewY :number;
+	zIndex :number;
+	vertexZ :number;
+	rotation :number;
+	rotationX :number;
+	rotationY :number;
+	scale :number;
+	scaleX :number;
+	scaleY :number;
+	visible :boolean;
+	color :Color;
+	cascadeColor :boolean;
+	opacity :number;
+	opacityModifyRGB :boolean;
+	cascadeOpacity :boolean;
+	children :Array<any>;
+	childrenCount :number;
+	parent :Node;
+	running :boolean;
+	tag :number;
+	userData :any;
+	userObject :any;
+	arrivalOrder :number;
+	actionManager :ActionManager;
+	scheduler :Scheduler;
+	grid :GridBase;
+	shaderProgram :GLProgram;
+	glServerState :number;
 	constructor(): any ;
 	init(...p:any): boolean ;
 	attr(attrs:any): any ;
@@ -1422,9 +1448,9 @@ declare class Node  {
 }
 declare class AtlasNode extends Node {
 	constructor(tile:string,tileWidth:number,tileHeight:number,itemsToRender:number): any ;
-	 texture :Texture2D;
-	 textureAtlas :TextureAtlas;
-	 quadsToDraw :number;
+	texture :Texture2D;
+	textureAtlas :TextureAtlas;
+	quadsToDraw :number;
 	constructor(tile:string,tileWidth:number,tileHeight:number,itemsToRender:number): any ;
 	updateAtlasValues(): any ;
 	getColor(): Color ;
@@ -1445,15 +1471,15 @@ declare class AtlasNode extends Node {
 	static create(...p:any): any ;
 }
 declare class Texture2D  {
-	 name :number;
-	 pixelFormat :number;
-	 pixelsWidth :number;
-	 pixelsHeight :number;
-	 width :number;
-	 height :number;
-	 shaderProgram :GLProgram;
-	 maxS :number;
-	 maxT :number;
+	name :number;
+	pixelFormat :number;
+	pixelsWidth :number;
+	pixelsHeight :number;
+	width :number;
+	height :number;
+	shaderProgram :GLProgram;
+	maxS :number;
+	maxT :number;
 	static extend(props:{ [key: string]: any }): function ;
 	static implement(props:{ [key: string]: any }): function ;
 }
@@ -1474,11 +1500,11 @@ declare class textureCache  {
 	static dumpCachedTextureInfo(): any ;
 }
 declare class TextureAtlas  {
-	 dirty :boolean;
-	 texture :Image;
-	 capacity :number;
-	 totalQuads :number;
-	 quads :Array<any>;
+	dirty :boolean;
+	texture :Image;
+	capacity :number;
+	totalQuads :number;
+	quads :Array<any>;
 	constructor(fileName:string|Texture2D,capacity:number): any ;
 	getTotalQuads(): number ;
 	getCapacity(): number ;
@@ -1535,12 +1561,12 @@ declare class LayerColor extends Layer {
 }
 declare class LayerGradient extends LayerColor {
 	constructor(start:Color,end:Color,v?:Point): any ;
-	 startColor :Color;
-	 endColor :Color;
-	 startOpacity :number;
-	 endOpacity :number;
-	 vector :number;
-	 compressedInterpolation :number;
+	startColor :Color;
+	endColor :Color;
+	startOpacity :number;
+	endOpacity :number;
+	vector :number;
+	compressedInterpolation :number;
 	constructor(start:Color,end:Color,v?:Point,stops:Array<any>|null): any ;
 	init(...p:any): boolean ;
 	setContentSize(size:Size|number,height?:number): any ;
@@ -1571,17 +1597,17 @@ declare class LayerMultiplex extends Layer {
 }
 declare class Sprite extends Node {
 	constructor(fileName:string|SpriteFrame|HTMLImageElement|Texture2D,rect?:Rect,rotated?:boolean): any ;
-	 dirty :boolean;
-	 flippedX :boolean;
-	 flippedY :boolean;
-	 offsetX :number;
-	 offsetY :number;
-	 atlasIndex :number;
-	 texture :Texture2D;
-	 textureRectRotated :boolean;
-	 textureAtlas :TextureAtlas;
-	 batchNode :SpriteBatchNode;
-	 quad :V3F_C4B_T2F_Quad;
+	dirty :boolean;
+	flippedX :boolean;
+	flippedY :boolean;
+	offsetX :number;
+	offsetY :number;
+	atlasIndex :number;
+	texture :Texture2D;
+	textureRectRotated :boolean;
+	textureAtlas :TextureAtlas;
+	batchNode :SpriteBatchNode;
+	quad :V3F_C4B_T2F_Quad;
 	textureLoaded(): boolean ;
 	addLoadedEventListener(callback:function,target:any): any ;
 	isDirty(): boolean ;
@@ -1713,7 +1739,7 @@ declare class SpriteFrame  {
 	static implement(props:{ [key: string]: any }): function ;
 }
 declare class spriteFrameCache  {
-	static addSpriteFrames(url:string,texture:HTMLImageElement|Texture2D|string): any ;
+	static addSpriteFrames(url:string,texture?:HTMLImageElement|Texture2D|string): any ;
 	static addSpriteFrame(frame:SpriteFrame,frameName:string): any ;
 	static removeSpriteFrames(): any ;
 	static removeSpriteFrameByName(name:string): any ;
@@ -1723,8 +1749,8 @@ declare class spriteFrameCache  {
 }
 declare class SpriteBatchNode extends Node {
 	constructor(fileImage:string|Texture2D,capacity:number): any ;
-	 textureAtlas :TextureAtlas;
-	 descendants :Array<any>;
+	textureAtlas :TextureAtlas;
+	descendants :Array<any>;
 	addSpriteWithoutQuad(child:Sprite,z:number,aTag:number): SpriteBatchNode ;
 	getTextureAtlas(): TextureAtlas ;
 	setTextureAtlas(textureAtlas:TextureAtlas): any ;
@@ -1926,21 +1952,21 @@ declare class DrawingPrimitiveCanvas  {
 }
 declare class LabelTTF extends Sprite {
 	constructor(text:string,fontName?:string|FontDefinition,fontSize?:number,dimensions?:Size,hAlignment?:number,vAlignment?:number): any ;
-	 string :string;
-	 textAlign :number;
-	 verticalAlign :number;
-	 fontSize :number;
-	 fontName :string;
-	 font :string;
-	 boundingWidth :number;
-	 boundingHeight :number;
-	 fillStyle :Color;
-	 strokeStyle :Color;
-	 lineWidth :number;
-	 shadowOffsetX :number;
-	 shadowOffsetY :number;
-	 shadowOpacity :number;
-	 shadowBlur :number;
+	string :string;
+	textAlign :number;
+	verticalAlign :number;
+	fontSize :number;
+	fontName :string;
+	font :string;
+	boundingWidth :number;
+	boundingHeight :number;
+	fillStyle :Color;
+	strokeStyle :Color;
+	lineWidth :number;
+	shadowOffsetX :number;
+	shadowOffsetY :number;
+	shadowOpacity :number;
+	shadowBlur :number;
 	initWithString(label:string,fontName:string,fontSize:number,dimensions?:Size,hAlignment?:number,vAlignment?:number): boolean ;
 	getString(): string ;
 	getHorizontalAlignment(): number ;
@@ -2082,12 +2108,12 @@ declare class audioEngine  {
 	static end(): any ;
 }
 declare class RenderTexture extends Node {
-	 sprite :Sprite;
-	 clearFlags :Sprite;
-	 clearDepthVal :number;
-	 autoDraw :boolean;
-	 clearStencilVal :number;
-	 clearColorVal :Color;
+	sprite :Sprite;
+	clearFlags :Sprite;
+	clearDepthVal :number;
+	autoDraw :boolean;
+	clearStencilVal :number;
+	clearColorVal :Color;
 	constructor(width:number,height:number,format:number,depthStencilFormat:number): any ;
 	cleanup(): any ;
 	getSprite(): Sprite ;
@@ -2118,9 +2144,9 @@ declare class RenderTexture extends Node {
 	static create(...p:any): any ;
 }
 declare class MotionStreak extends Node {
-	 texture :Texture2D;
-	 fastMode :boolean;
-	 startingPositionInitialized :boolean;
+	texture :Texture2D;
+	fastMode :boolean;
+	startingPositionInitialized :boolean;
 	constructor(fade:number,minSeg:number,stroke:number,color:number,texture:string|Texture2D): any ;
 	getTexture(): Texture2D ;
 	setTexture(texture:Texture2D): any ;
@@ -2148,8 +2174,8 @@ declare class MotionStreak extends Node {
 	static create(...p:any): any ;
 }
 declare class NodeGrid  {
-	 grid :GridBase;
-	 target :Node;
+	grid :GridBase;
+	target :Node;
 	getGrid(): GridBase ;
 	setGrid(grid:GridBase): any ;
 	setGridRect(rect:Rect): any ;
@@ -2159,9 +2185,9 @@ declare class NodeGrid  {
 }
 declare class ClippingNode extends Node {
 	constructor(stencil?:Node): any ;
-	 alphaThreshold :number;
-	 inverted :boolean;
-	 stencil :Node;
+	alphaThreshold :number;
+	inverted :boolean;
+	stencil :Node;
 	constructor(stencil?:Node): any ;
 	init(...p:any): any ;
 	onEnter(): any ;
@@ -2240,9 +2266,9 @@ declare class DrawNode extends Node {
 	clear(): any ;
 }
 declare class Action  {
-	 target :Node;
-	 originalTarget :Node;
-	 tag :number;
+	target :Node;
+	originalTarget :Node;
+	tag :number;
 	constructor(): any ;
 	copy(): Action ;
 	clone(): Action ;
@@ -2288,10 +2314,10 @@ declare class Speed extends Action {
 }
 declare class Follow extends Action {
 	constructor(followedNode:Node,rect:Rect): any ;
-	 leftBoundary :number;
-	 rightBoundary :number;
-	 topBoundary :number;
-	 bottomBoundary :number;
+	leftBoundary :number;
+	rightBoundary :number;
+	topBoundary :number;
+	bottomBoundary :number;
 	constructor(followedNode:Node,rect:Rect): any ;
 	clone(): Follow ;
 	isBoundarySet(): boolean ;
@@ -3163,12 +3189,12 @@ declare class PageTurn3D extends Grid3DAction {
 	static create(...p:any): any ;
 }
 declare class ProgressTimer extends Node {
-	 midPoint :Point;
-	 barChangeRate :Point;
-	 type :number;
-	 percentage :number;
-	 sprite :Sprite;
-	 reverseDir :boolean;
+	midPoint :Point;
+	barChangeRate :Point;
+	type :number;
+	percentage :number;
+	sprite :Sprite;
+	reverseDir :boolean;
 	constructor(sprite:Sprite): any ;
 	getMidpoint(): Point ;
 	setMidpoint(mpoint:Point): any ;
@@ -3455,7 +3481,7 @@ declare class TransitionPageTurn extends TransitionScene {
 }
 declare class LabelAtlas extends AtlasNode {
 	constructor(strText:string,charMapFile:string,itemWidth?:number,itemHeight?:number,startCharMap?:number): any ;
-	 string :string;
+	string :string;
 	constructor(strText:string,charMapFile:string,itemWidth?:number,itemHeight?:number,startCharMap?:number): any ;
 	textureLoaded(): boolean ;
 	addLoadedEventListener(callback:function,target:Node): any ;
@@ -3468,9 +3494,9 @@ declare class LabelAtlas extends AtlasNode {
 }
 declare class LabelBMFont extends SpriteBatchNode {
 	constructor(str:string,fntFile:string,width?:number,alignment?:number,imageOffset?:Point): any ;
-	 string :string;
-	 textAlign :number;
-	 boundingWidth :number;
+	string :string;
+	textAlign :number;
+	boundingWidth :number;
 	constructor(str:string,fntFile:string,width?:number,alignment?:number,imageOffset?:Point): any ;
 	textureLoaded(): boolean ;
 	addLoadedEventListener(callback:function,target:any): any ;
@@ -3506,49 +3532,49 @@ declare class Particle  {
 	static TemporaryPoints :any;
 }
 declare class ParticleSystem extends Node {
-	 opacityModifyRGB :boolean;
-	 batchNode :SpriteBatchNode;
-	 active :boolean;
-	 shapeType :number;
-	 atlasIndex :number;
-	 particleCount :number;
-	 duration :number;
-	 sourcePos :Point;
-	 posVar :Point;
-	 life :number;
-	 lifeVar :number;
-	 angle :number;
-	 angleVar :number;
-	 startSize :number;
-	 startSizeVar :number;
-	 endSize :number;
-	 endSizeVar :number;
-	 startSpin :number;
-	 startSpinVar :number;
-	 endSpin :number;
-	 endSpinVar :number;
-	 gravity :Point;
-	 speed :Point;
-	 speedVar :Point;
-	 tangentialAccel :number;
-	 tangentialAccelVar :number;
-	 rotationIsDir :boolean;
-	 startRadius :number;
-	 startRadiusVar :number;
-	 endRadius :number;
-	 endRadiusVar :number;
-	 rotatePerS :number;
-	 rotatePerSVar :number;
-	 startColor :Color;
-	 startColorVar :Color;
-	 endColor :Color;
-	 endColorVar :Color;
-	 emissionRate :number;
-	 emitterMode :number;
-	 positionType :number;
-	 totalParticles :number;
-	 autoRemoveOnFinish :boolean;
-	 texture :Texture2D|HTMLImageElement|HTMLCanvasElement;
+	opacityModifyRGB :boolean;
+	batchNode :SpriteBatchNode;
+	active :boolean;
+	shapeType :number;
+	atlasIndex :number;
+	particleCount :number;
+	duration :number;
+	sourcePos :Point;
+	posVar :Point;
+	life :number;
+	lifeVar :number;
+	angle :number;
+	angleVar :number;
+	startSize :number;
+	startSizeVar :number;
+	endSize :number;
+	endSizeVar :number;
+	startSpin :number;
+	startSpinVar :number;
+	endSpin :number;
+	endSpinVar :number;
+	gravity :Point;
+	speed :Point;
+	speedVar :Point;
+	tangentialAccel :number;
+	tangentialAccelVar :number;
+	rotationIsDir :boolean;
+	startRadius :number;
+	startRadiusVar :number;
+	endRadius :number;
+	endRadiusVar :number;
+	rotatePerS :number;
+	rotatePerSVar :number;
+	startColor :Color;
+	startColorVar :Color;
+	endColor :Color;
+	endColorVar :Color;
+	emissionRate :number;
+	emitterMode :number;
+	positionType :number;
+	totalParticles :number;
+	autoRemoveOnFinish :boolean;
+	texture :Texture2D|HTMLImageElement|HTMLCanvasElement;
 	constructor(plistFile:string|number): any ;
 	ignoreColor(ignore:boolean): any ;
 	initTexCoordsWithRect(pointRect:Rect): any ;
@@ -3666,9 +3692,9 @@ declare class ParticleSystem extends Node {
 	setDisplayFrame(spriteFrame:SpriteFrame): any ;
 	setTextureWithRect(texture:Texture2D,rect:Rect): any ;
 	listenBackToForeground(obj:any): any ;
-	 drawMode :any;
-	 radialAccel :any;
-	 radialAccelVar :any;
+	drawMode :any;
+	radialAccel :any;
+	radialAccelVar :any;
 	static create(...p:any): any ;
 	static createWithTotalParticles(plistFile:string|number): ParticleSystem ;
 	static ModeA :typeof cc_ParticleSystem_ModeA ;
@@ -3743,8 +3769,8 @@ declare class ParticleRain extends ParticleSystem {
 }
 declare class ParticleBatchNode extends ParticleSystem {
 	constructor(fileImage:string|Texture2D,capacity:number): any ;
-	 texture :Texture2D|HTMLImageElement|HTMLCanvasElement;
-	 textureAtlas :TextureAtlas;
+	texture :Texture2D|HTMLImageElement|HTMLCanvasElement;
+	textureAtlas :TextureAtlas;
 	constructor(fileImage:string|Texture2D,capacity:number): any ;
 	initWithTexture(texture:Texture2D|HTMLImageElement|HTMLCanvasElement,capacity:number): boolean ;
 	initWithFile(...p:any): boolean ;
@@ -3805,10 +3831,10 @@ declare class TextFieldDelegate  {
 }
 declare class TextFieldTTF extends LabelTTF {
 	constructor(placeholder:string,dimensions:Size,alignment:number,fontName:string,fontSize:number): any ;
-	 delegate :Node;
-	 charCount :number;
-	 placeHolder :string;
-	 colorSpaceHolder :Color;
+	delegate :Node;
+	charCount :number;
+	placeHolder :string;
+	colorSpaceHolder :Color;
 	constructor(placeholder:string,dimensions:Size,alignment:number,fontName:string,fontSize:number): any ;
 	getDelegate(): Node ;
 	setDelegate(value:Node): any ;
@@ -3852,23 +3878,23 @@ declare class MenuItem extends Node {
 	unselected(): any ;
 	setCallback(callback:function|string,target:Node): any ;
 	activate(): any ;
-	 enabled :any;
+	enabled :any;
 	static create(...p:any): any ;
-	 string :any;
-	 disabledColor :any;
-	 label :any;
-	 fontSize :any;
-	 fontName :any;
-	 normalImage :any;
-	 selectedImage :any;
-	 disabledImage :any;
-	 selectedIndex :any;
+	string :any;
+	disabledColor :any;
+	label :any;
+	fontSize :any;
+	fontName :any;
+	normalImage :any;
+	selectedImage :any;
+	disabledImage :any;
+	selectedIndex :any;
 }
 declare class MenuItemLabel extends MenuItem {
 	constructor(label:Node,selector:function|string,target:Node): any ;
-	 string :string;
-	 label :Node;
-	 disabledColor :Color;
+	string :string;
+	label :Node;
+	disabledColor :Color;
 	constructor(label:Node,selector:function|string,target:Node): any ;
 	getDisabledColor(): Color ;
 	setDisabledColor(color:Color): any ;
@@ -3903,9 +3929,9 @@ declare class MenuItemFont extends MenuItemLabel {
 }
 declare class MenuItemSprite extends MenuItem {
 	constructor(normalSprite:Image|null,selectedSprite:Image|null,three:Image|Node|null,four:string|function|Node|null,five:string|function|null): any ;
-	 normalImage :Sprite;
-	 selectedImage :Sprite;
-	 disabledImage :Sprite;
+	normalImage :Sprite;
+	selectedImage :Sprite;
+	disabledImage :Sprite;
 	constructor(normalSprite:Image|null,selectedSprite:Image|null,three:Image|Node|null,four:string|function|Node|null,five:string|function|null): any ;
 	getNormalImage(): Sprite ;
 	setNormalImage(normalImage:Sprite): any ;
@@ -3929,8 +3955,8 @@ declare class MenuItemImage extends MenuItemSprite {
 	static create(...p:any): any ;
 }
 declare class MenuItemToggle extends MenuItem {
-	 subItems :Array<any>;
-	 selectedIndex :number;
+	subItems :Array<any>;
+	selectedIndex :number;
 	constructor(): any ;
 	getOpacity(): number ;
 	setOpacity(opacity:number): any ;
@@ -3970,7 +3996,7 @@ declare class Menu extends Layer {
 	onExit(): any ;
 	setOpacityModifyRGB(value:any): any ;
 	isOpacityModifyRGB(): boolean ;
-	 enabled :any;
+	enabled :any;
 	static create(...p:any): any ;
 }
 declare class ImageTGA  {
@@ -3981,13 +4007,13 @@ declare class BinaryStreamReader  {
 }
 declare class TMXTiledMap extends Node {
 	constructor(tmxFile:string,resourcePath:string): any ;
-	 properties :Array<any>;
-	 mapOrientation :number;
-	 objectGroups :Array<any>;
-	 mapWidth :number;
-	 mapHeight :number;
-	 tileWidth :number;
-	 tileHeight :number;
+	properties :Array<any>;
+	mapOrientation :number;
+	objectGroups :Array<any>;
+	mapWidth :number;
+	mapHeight :number;
+	tileWidth :number;
+	tileHeight :number;
 	constructor(tmxFile:string,resourcePath:string): any ;
 	getMapSize(): Size ;
 	setMapSize(Var:Size): any ;
@@ -4010,7 +4036,7 @@ declare class TMXTiledMap extends Node {
 	static create(...p:any): any ;
 }
 declare class TMXLayerInfo  {
-	 properties :Array<any>;
+	properties :Array<any>;
 	getProperties(): Array<any> ;
 	setProperties(value:any): any ;
 	static ATTRIB_NONE :number;
@@ -4021,30 +4047,30 @@ declare class TMXLayerInfo  {
 	static implement(props:{ [key: string]: any }): function ;
 }
 declare class TMXTilesetInfo  {
-	 name :string;
-	 firstGid :number;
-	 spacing :number;
-	 margin :number;
-	 sourceImage :string;
-	 imageSize :Size|null;
+	name :string;
+	firstGid :number;
+	spacing :number;
+	margin :number;
+	sourceImage :string;
+	imageSize :Size|null;
 	rectForGID(gid:number): Rect ;
 	static extend(props:{ [key: string]: any }): function ;
 	static implement(props:{ [key: string]: any }): function ;
 }
 declare class TMXMapInfo extends saxParser {
 	constructor(tmxFile:string,resourcePath:string): any ;
-	 properties :Array<any>;
-	 orientation :number;
-	 parentElement :any;
-	 parentGID :number;
-	 layerAttrs :any;
-	 storingCharacters :boolean;
-	 tmxFileName :string;
-	 currentString :string;
-	 mapWidth :number;
-	 mapHeight :number;
-	 tileWidth :number;
-	 tileHeight :number;
+	properties :Array<any>;
+	orientation :number;
+	parentElement :any;
+	parentGID :number;
+	layerAttrs :any;
+	storingCharacters :boolean;
+	tmxFileName :string;
+	currentString :string;
+	mapWidth :number;
+	mapHeight :number;
+	tileWidth :number;
+	tileHeight :number;
 	constructor(tmxFile:string,resourcePath:string): any ;
 	getOrientation(): number ;
 	setOrientation(value:number): any ;
@@ -4081,8 +4107,8 @@ declare class TMXMapInfo extends saxParser {
 	static create(...p:any): any ;
 }
 declare class TMXObjectGroup  {
-	 properties :Array<any>;
-	 groupName :string;
+	properties :Array<any>;
+	groupName :string;
 	constructor(): any ;
 	getPositionOffset(): Point ;
 	setPositionOffset(offset:Point): any ;
@@ -4099,15 +4125,15 @@ declare class TMXObjectGroup  {
 	static implement(props:{ [key: string]: any }): function ;
 }
 declare class TMXLayer extends SpriteBatchNode {
-	 tiles :Array<any>;
-	 tileset :TMXTilesetInfo;
-	 layerOrientation :number;
-	 properties :Array<any>;
-	 layerName :string;
-	 layerWidth :number;
-	 layerHeight :number;
-	 tileWidth :number;
-	 tileHeight :number;
+	tiles :Array<any>;
+	tileset :TMXTilesetInfo;
+	layerOrientation :number;
+	properties :Array<any>;
+	layerName :string;
+	layerWidth :number;
+	layerHeight :number;
+	tileWidth :number;
+	tileHeight :number;
 	constructor(tilesetInfo:TMXTilesetInfo,layerInfo:TMXLayerInfo,mapInfo:TMXMapInfo): any ;
 	setContentSize(size:Size|number,height?:number): any ;
 	getTexture(): Texture2D ;
@@ -4152,7 +4178,7 @@ declare class PointObject  {
 	static implement(props:{ [key: string]: any }): function ;
 }
 declare class ParallaxNode extends Node {
-	 parallaxArray :Array<any>;
+	parallaxArray :Array<any>;
 	getParallaxArray(): Array<any> ;
 	setParallaxArray(value:Array<any>): any ;
 	constructor(): any ;
@@ -4188,8 +4214,8 @@ declare class Quaternion  {
 	static rotationBetweenVec3(vec1:math.Vec3,vec2:math.Vec3,fallback:math.Vec3): math.Quaternion ;
 }
 declare class AABB  {
-	 min :any;
-	 max :any;
+	min :any;
+	max :any;
 	static containsPoint(point:math.Vec3): boolean ;
 	assignFrom(aabb:math.AABB): any ;
 	static assign(): any ;
@@ -4215,23 +4241,23 @@ declare class cc_Particle_ModeB  {
 }
 declare class cc_ParticleSystem_ModeA  {
 	constructor(gravity?:Point,speed?:number,speedVar?:number,tangentialAccel?:number,tangentialAccelVar?:number,radialAccel?:number,radialAccelVar?:number,rotationIsDir?:boolean): any ;
-	 gravity :any;
-	 speed :any;
-	 speedVar :any;
-	 tangentialAccel :any;
-	 tangentialAccelVar :any;
-	 radialAccel :any;
-	 radialAccelVar :any;
-	 rotationIsDir :any;
+	gravity :any;
+	speed :any;
+	speedVar :any;
+	tangentialAccel :any;
+	tangentialAccelVar :any;
+	radialAccel :any;
+	radialAccelVar :any;
+	rotationIsDir :any;
 }
 declare class cc_ParticleSystem_ModeB  {
 	constructor(startRadius?:number,startRadiusVar?:number,endRadius?:number,endRadiusVar?:number,rotatePerSecond?:number,rotatePerSecondVar?:number): any ;
-	 startRadius :any;
-	 startRadiusVar :any;
-	 endRadius :any;
-	 endRadiusVar :any;
-	 rotatePerSecond :any;
-	 rotatePerSecondVar :any;
+	startRadius :any;
+	startRadiusVar :any;
+	endRadius :any;
+	endRadiusVar :any;
+	rotatePerSecond :any;
+	rotatePerSecondVar :any;
 }
 declare class jsb  {
 	static fileUtils :typeof fileUtils ;
@@ -4309,4 +4335,3 @@ declare class ClassManager  {
 }
 }
 
-declare var cc : typeof cc ;
